@@ -1,16 +1,19 @@
 import pickle
 from pydantic import BaseModel
 import pandas as pd
+from fastapi import APIRouter
 
-
-#Load the Model and the FITTED Transformer
-
-with open('logistic_smote_model.pkl', 'rb') as f:
+with open('models/logistic_smote_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-with open('transformer.pkl', 'rb') as f:
+with open('models/transformer.pkl', 'rb') as f:
     transformer = pickle.load(f)
 
+with open('models/rand_smote_model.pkl', 'rb') as f:
+    rand_smote_model = pickle.load(f)
+
+
+a1_app = APIRouter()
 
 class LogisticModel(BaseModel):
     age : int
@@ -26,6 +29,7 @@ class LogisticModel(BaseModel):
 
 
 
+@a1_app.post('/predict_attrition')
 def predict_attrition(data: LogisticModel):
     if transformer is None:
         return {'error': 'Model transformer failed to load.'}
@@ -36,8 +40,33 @@ def predict_attrition(data: LogisticModel):
     transformed_data = transformer.transform(df)
     
     prediction = model.predict(transformed_data)
+    probability = model.predict_proba(transformed_data)[0]
 
     
     return {
         'attrition_prediction': int(prediction[0]),
+        'attrition_probability': float(probability[1]),
+        'stay_probability': float(probability[0])
+    }
+
+
+
+@a1_app.post('/predict_using_random_forest')
+def predict_using_random_forest(data: LogisticModel):
+    if transformer is None:
+        return {'error': 'Model transformer failed to load.'}
+
+    input_data = data.dict()
+    df = pd.DataFrame([input_data])
+    
+    transformed_data = transformer.transform(df)
+    
+    prediction = rand_smote_model.predict(transformed_data)
+    probability = rand_smote_model.predict_proba(transformed_data)[0]
+
+    
+    return {
+        'attrition_prediction': int(prediction[0]),
+        'attrition_probability': float(probability[1]),
+        'stay_probability': float(probability[0])
     }
