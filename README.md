@@ -2,6 +2,38 @@
 
 Hey there! This repository contains three machine learning assignments that showcase different aspects of building, debugging, and optimizing ML models for employee analytics. Each assignment tackles a unique challenge and demonstrates practical skills in data science and model development.
 
+
+
+## Installation and Running:
+### Easy method
+```bash
+# Just run the following command 
+ .\run.bat
+ or 
+ run.bat
+# This command will automatically install all the Requirements and start 2 Server
+```
+### Little Complex
+```bash
+# BACKED 
+pip install -r requirements.txt
+
+python -m uvicorn main:app --reload
+
+# Frontend in seperate Terminal
+cd _frontend
+
+npm install
+
+npm run dev
+```
+
+### After running both open the URL : http://localhost:8080
+you will see the Following page
+![alt text](image.png)
+### you can directly test here
+
+
 ## What's Inside
 
 ### Assignment 1: Employee Attrition Prediction
