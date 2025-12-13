@@ -3,6 +3,9 @@
 Hey there! This repository contains three machine learning assignments that showcase different aspects of building, debugging, and optimizing ML models for employee analytics. Each assignment tackles a unique challenge and demonstrates practical skills in data science and model development.
 
 
+# I also did deploy the entire Project here you can go through this URL : 
+
+http://13.232.34.120:8080/
 
 ## Installation and Running:
 ### Easy method
