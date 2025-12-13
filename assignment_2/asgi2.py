@@ -3,6 +3,7 @@ import pandas as pd
 from pydantic import BaseModel
 from sklearn.preprocessing import StandardScaler
 from fastapi import APIRouter
+from pathlib import Path
 
 
 class BrokenData(BaseModel):
@@ -37,9 +38,13 @@ a2_app = APIRouter()
 def root():
     return {"message": "API is running", "endpoints": ["/predict/broken", "/predict/fixed"]}
 
-model = joblib.load('models/broken.pkl')
-scaler = joblib.load('models/scaler.pkl')
-fixed_model = joblib.load('models/fixed.pkl')
+# Get the directory containing this file
+BASE_DIR = Path(__file__).parent
+MODELS_DIR = BASE_DIR / 'models'
+
+model = joblib.load(MODELS_DIR / 'broken.pkl')
+scaler = joblib.load(MODELS_DIR / 'scaler.pkl')
+fixed_model = joblib.load(MODELS_DIR / 'fixed.pkl')
 
 # Get the exact feature names and order from the scaler
 BROKEN_MODEL_TRAINED_COLS = scaler.feature_names_in_.tolist()

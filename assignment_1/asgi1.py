@@ -2,14 +2,20 @@ import pickle
 from pydantic import BaseModel
 import pandas as pd
 from fastapi import APIRouter
+from pathlib import Path
+from pathlib import Path
 
-with open('models/logistic_smote_model.pkl', 'rb') as f:
+# Get the directory containing this file
+BASE_DIR = Path(__file__).parent
+MODELS_DIR = BASE_DIR / 'models'
+
+with open(MODELS_DIR / 'logistic_smote_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
-with open('models/transformer.pkl', 'rb') as f:
+with open(MODELS_DIR / 'transformer.pkl', 'rb') as f:
     transformer = pickle.load(f)
 
-with open('models/rand_smote_model.pkl', 'rb') as f:
+with open(MODELS_DIR / 'rand_smote_model.pkl', 'rb') as f:
     rand_smote_model = pickle.load(f)
 
 
