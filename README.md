@@ -44,7 +44,7 @@ Just navigate to any assignment folder and follow along. Everything is designed 
 
 ```bash
 # Clone the repo
-git clone <your-repo-url>
+git clone https://github.com/lokeshpanthangi/drift_ai.git
 cd drift_ai
 
 # Install common dependencies
